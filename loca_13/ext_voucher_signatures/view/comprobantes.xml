@@ -55,7 +55,7 @@
                         <hr/>
                         <b><span t-esc="o.company_id.name"/></b>
                         <br/>
-                        <b>Usuario Autorizado</b>
+                        <b>Autorizado por:</b>
                         <br/>
                         <span t-esc="o.create_uid.partner_id.name"/>
                     </div>
@@ -85,7 +85,7 @@
                     </div>
 
                 </div> 
-                Usuario:<span t-field="o.write_uid.name"/> 
+                <span t-field="o.write_uid.name"/> 
                 <br/>
                 <span t-field="o.invoice_id.company_id.name"/>
                 <br/>
@@ -107,7 +107,7 @@
                     </div>
                 </div>  
 
-                Usuario:<span t-field="o.write_uid.name"/> 
+                <span t-field="o.write_uid.name"/> 
                 <br/>
                 <span t-field="o.company_id.name"/>
                 <br/>
