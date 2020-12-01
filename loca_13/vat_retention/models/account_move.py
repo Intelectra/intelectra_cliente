@@ -71,13 +71,22 @@ class AccountMove(models.Model):
 
         if self.type=="in_invoice" or self.type=="in_refund" or self.type=="in_receipt":
             tipo_fact="proveedor"
-            if self.company_id.partner_id.ret_agent:
-                ban=0
-                ban=self.verifica_exento_iva()
-                if ban>0:
-                    self.action_create_vat_retention(tipo_fact)
-                    id_vat_ret=self.vat_ret_id.id
-                    self.actualiza_voucher(id_vat_ret,tipo_fact) #self.asiento_retencion(self.id,id_vat_ret) #funtcion darrell
+            if self.company_id.confg_ret_proveedores=="c":
+                if self.company_id.partner_id.ret_agent:
+                    ban=0
+                    ban=self.verifica_exento_iva()
+                    if ban>0:
+                        self.action_create_vat_retention(tipo_fact)
+                        id_vat_ret=self.vat_ret_id.id
+                        self.actualiza_voucher(id_vat_ret,tipo_fact) #self.asiento_retencion(self.id,id_vat_ret) #funtcion darrell
+            if self.company_id.confg_ret_proveedores=="p":
+                if self.partner_id.ret_agent:
+                    ban=0
+                    ban=self.verifica_exento_iva()
+                    if ban>0:
+                        self.action_create_vat_retention(tipo_fact)
+                        id_vat_ret=self.vat_ret_id.id
+                        self.actualiza_voucher(id_vat_ret,tipo_fact)
 
 
     def funcion_numeracion_fac(self):
