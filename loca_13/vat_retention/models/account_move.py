@@ -183,7 +183,7 @@ class AccountMove(models.Model):
         vals = {
             'rif': self.rif,
             'partner_id': self.partner_id.id,
-            'accouting_date': datetime.now(),
+            'accouting_date': self.date, #datetime.now(),
             'invoice_number': self.invoice_number,
             'invoice_id': self.id,
             #'amount_untaxed': self.amount_untaxed,
