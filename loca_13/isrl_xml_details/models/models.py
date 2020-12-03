@@ -70,9 +70,11 @@ class XmlLines(models.Model):
                 fecha += str(item.fecha_operacion.month)+ '/'
             fecha += str(item.fecha_operacion.year)
 
+            nro_fact=item.numero_factura.replace('-', '')
+            nro_fact=nro_fact.replace('000','00')
             elemento_hijo_1 = ET.SubElement(elemento_1, 'DetalleRetencion')
             elemento_hijo_2 = ET.SubElement(elemento_hijo_1, 'RifRetenido').text=str(item.rif_retenido)
-            elemento_hijo_3 = ET.SubElement(elemento_hijo_1, 'NumeroFactura').text=str(item.numero_factura) if item.numero_factura else '0'
+            elemento_hijo_3 = ET.SubElement(elemento_hijo_1, 'NumeroFactura').text=str(nro_fact) if item.numero_factura else '0'
             elemento_hijo_4 = ET.SubElement(elemento_hijo_1, 'NumeroControl').text=str(item.numero_control) if  item.numero_control else 'NA'
             elemento_hijo_5 = ET.SubElement(elemento_hijo_1, 'FechaOperacion').text=str(fecha)
             elemento_hijo_6 = ET.SubElement(elemento_hijo_1, 'CodigoConcepto').text=str(item.codigo_concepto)
