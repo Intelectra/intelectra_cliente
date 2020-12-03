@@ -44,8 +44,10 @@ class RetentionVat(models.Model):
     
     type = fields.Selection(related='invoice_id.type',)
     
-    date_move = fields.Date(string='Date Move',default=lambda *a:datetime.now().strftime('%Y-%m-%d'))
-    date_isrl= fields.Date(string='Date ISLR',default=lambda *a:datetime.now().strftime('%Y-%m-%d'))
+    date_move = fields.Date(string='Date Move')
+    date_isrl= fields.Date(string='Date ISLR')
+    #date_move = fields.Date(string='Date Move',default=lambda *a:datetime.now().strftime('%Y-%m-%d'))
+    #date_isrl= fields.Date(string='Date ISLR',default=lambda *a:datetime.now().strftime('%Y-%m-%d'))
     partner_id = fields.Many2one(comodel_name='res.partner', string='Empresa')
     invoice_id = fields.Many2one(comodel_name='account.move', string='Factura')
     
