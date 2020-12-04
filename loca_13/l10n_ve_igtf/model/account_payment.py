@@ -304,24 +304,23 @@ class account_payment(models.Model):
         return name
 
     def action_draft(self):
-    	#raise UserError(_('El id Move = darrell'))
-    	id_pago=self.id
-    	move_itf_idd=self.move_itf_id.id
-    	#raise UserError(_('move_itf_idd = %s')%move_itf_idd)
-    	mov_igtf=self.env['account.move'].search([('id','=',move_itf_idd)])
-    	mov_igtf.filtered(lambda move: move.state == 'posted').button_draft()
-    	mov_igtf.with_context(force_delete=True).unlink()
+        id_pago=self.id
+        move_itf_idd=self.move_itf_id.id
+        if move_itf_idd:
+            mov_igtf=self.env['account.move'].search([('id','=',move_itf_idd)])
+            mov_igtf.filtered(lambda move: move.state == 'posted').button_draft()
+            mov_igtf.with_context(force_delete=True).unlink()
 
-    	# CODIGO ORIGINAL DEL SISTEMA NO TOCAR
-    	moves = self.mapped('move_line_ids.move_id')
-    	moves.filtered(lambda move: move.state == 'posted').button_draft()
-    	moves.with_context(force_delete=True).unlink()
-    	self.write({'state': 'draft'})
-    	# FIN CODIGO ORIGINAL
-    	# AQUI ELIMINA EL ASIENTO IGTF AL CANCELAr un pago
-    	"""if move_itf_idd:
-    		for move_igtf_iddd in move_igtf_idd:
-    			igtf=self.env['account.move'].search([('id','=',move_itf_iddd)])
-    			igtf.filtered(lambda move: move.state == 'posted').button_draft()
-    			igtf.with_context(force_delete=True).unlink()"""
+        # CODIGO ORIGINAL DEL SISTEMA NO TOCAR
+        moves = self.mapped('move_line_ids.move_id')
+        moves.filtered(lambda move: move.state == 'posted').button_draft()
+        moves.with_context(force_delete=True).unlink()
+        self.write({'state': 'draft'})
+        # FIN CODIGO ORIGINAL
+        # AQUI ELIMINA EL ASIENTO IGTF AL CANCELAr un pago
+        """if move_itf_idd:
+            for move_igtf_iddd in move_igtf_idd:
+                igtf=self.env['account.move'].search([('id','=',move_itf_iddd)])
+                igtf.filtered(lambda move: move.state == 'posted').button_draft()
+                igtf.with_context(force_delete=True).unlink()"""
             #raise UserError(_('El id Move = %s')%igtf)
