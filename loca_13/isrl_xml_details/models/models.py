@@ -72,7 +72,7 @@ class XmlLines(models.Model):
 
             if item.numero_factura:
                 nro_fact=item.numero_factura.replace('-', '')
-                nro_fact=nro_fact.replace('000','00')
+                nro_fact=item.numero_factura[:1]+item.numero_factura[-10:]
             else:
                 nro_fact=0
             elemento_hijo_1 = ET.SubElement(elemento_1, 'DetalleRetencion')
