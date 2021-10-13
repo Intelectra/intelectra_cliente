@@ -39,13 +39,14 @@ class Currency(models.Model):
 
     @api.depends('rate_ids.rate_real')
     def _compute_tasa_real(self):
-        lista_tasa = self.env['res.currency.rate'].search([('currency_id', '=', self.id)],order='id asc')
-        if lista_tasa:
-            for tasa in lista_tasa:
-                tasa_actual=tasa.rate_real
-                tasa_actual_inv=tasa.rate
-        else:
-            tasa_actual=1
-            tasa_actual_inv=1
-        self.rate_real=tasa_actual
-        self.rate=tasa_actual_inv
+        for selff in self:
+            lista_tasa = selff.env['res.currency.rate'].search([('currency_id', '=', selff.id)],order='id asc')
+            if lista_tasa:
+                for tasa in lista_tasa:
+                    tasa_actual=tasa.rate_real
+                    tasa_actual_inv=tasa.rate
+            else:
+                tasa_actual=1
+                tasa_actual_inv=1
+            selff.rate_real=tasa_actual
+            selff.rate=tasa_actual_inv
